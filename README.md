@@ -13,7 +13,7 @@ The aims are as follows:
    terms and needs.
  * Maintain a manageable Python script for generation based heavily on the
    work laid down by Jeremy Selan at the OpenColorIO project. For more
-   more information, see jeremyselan/OpenColorIO-Configs.
+   more information, see https://github.com/imageworks/OpenColorIO-Configs.
  * Use the established roles as implemented by the Blender project to ease
    integration.
 
@@ -43,7 +43,9 @@ generated and this should work as a drag-and-drop replacement to the existing
 Blender configuration.
 
 Your base Blender configuration should reside in:
-    /bin/<VERSION>/datafiles/colormanagement/
+    <pre>/bin/\<VERSION\>/datafiles/colormanagement/</pre>
+
+Where \<VERSION\> is your installed Blender version.
 
 Within this directory you should have a config.ocio and a luts directory. Simply
 archive your current config.ocio and luts directory to a different sub
