@@ -367,7 +367,6 @@ t = OCIO.FileTransform('alexalogc.spi1d', interpolation=OCIO.Constants.INTERP_LI
 cs.setTransform(t, OCIO.Constants.COLORSPACE_DIR_TO_REFERENCE)
 config.addColorSpace(cs)
 
-"""
 ###############################################################################
 
 'PLogLin'
@@ -410,7 +409,7 @@ t = OCIO.FileTransform('ploglin.spi1d', interpolation=OCIO.Constants.INTERP_LINE
 cs.setTransform(t, OCIO.Constants.COLORSPACE_DIR_TO_REFERENCE)
 config.addColorSpace(cs)
 
-"""
+
 ###############################################################################
 
 def fromSLog(x):
