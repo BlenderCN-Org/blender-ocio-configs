@@ -1,0 +1,100 @@
+ocio_profile_version: 1
+
+search_path: luts
+strictparsing: true
+luma: [0.2126, 0.7152, 0.0722]
+
+roles:
+  color_picking: sRGB
+  data: Raw / Data
+  default: sRGB
+  default_byte: sRGB
+  default_float: Linear sRGB/709
+  default_sequencer: sRGB
+  matte_paint: Raw / Data
+  reference: Linear sRGB/709
+  scene_linear: Linear sRGB/709
+  texture_paint: sRGB
+
+displays:
+  No Transform:
+    - !<View> {name: None, colorspace: Raw / Data}
+  REC.709 Monitor:
+    - !<View> {name: BT.709 (FR), colorspace: BT.709 (FR)}
+    - !<View> {name: None, colorspace: Raw / Data}
+  sRGB Monitor:
+    - !<View> {name: sRGB, colorspace: sRGB}
+    - !<View> {name: None, colorspace: Raw / Data}
+
+active_displays: [sRGB Monitor, REC.709 Monitor, No Transform]
+active_views: [sRGB, BT.709 (FR), None]
+
+colorspaces:
+  - !<ColorSpace>
+    name: Linear sRGB/709
+    family: ""
+    equalitygroup: ""
+    bitdepth: 32f
+    description: |
+      Scene-linear, BT.REC.709 / sRGB primaries, high dynamic range. Used for rendering and compositing.
+    isdata: false
+    allocation: lg2
+    allocationvars: [-15, 6]
+
+  - !<ColorSpace>
+    name: sRGB
+    family: ""
+    equalitygroup: ""
+    bitdepth: 32f
+    description: |
+      Standard RGB Display Space
+    isdata: false
+    allocation: uniform
+    allocationvars: [-0.125, 1.125]
+    to_reference: !<FileTransform> {src: srgb.spi1d, interpolation: linear}
+
+  - !<ColorSpace>
+    name: sRGB (HDR)
+    family: ""
+    equalitygroup: ""
+    bitdepth: 32f
+    description: |
+      Standard RGB Display Space, but with additional range to preserve float highlights.
+    isdata: false
+    allocation: uniform
+    allocationvars: [-0.125, 4.875]
+    to_reference: !<FileTransform> {src: srgbf.spi1d, interpolation: linear}
+
+  - !<ColorSpace>
+    name: BT.709 (FR)
+    family: ""
+    equalitygroup: ""
+    bitdepth: 32f
+    description: |
+      Rec. 709 (Full Range) Display Space
+    isdata: false
+    allocation: uniform
+    allocationvars: [-0.125, 1.125]
+    to_reference: !<FileTransform> {src: rec709fr.spi1d, interpolation: linear}
+
+  - !<ColorSpace>
+    name: JPLogLin
+    family: ""
+    equalitygroup: ""
+    bitdepth: 32f
+    description: |
+      Josh Pines style pivoted log/lin conversion. 445->0.18
+    isdata: false
+    allocation: uniform
+    allocationvars: [-0.125, 1.125]
+    to_reference: !<FileTransform> {src: ploglin.spi1d, interpolation: linear}
+
+  - !<ColorSpace>
+    name: Raw / Data
+    family: ""
+    equalitygroup: ""
+    bitdepth: 32f
+    description: |
+      Raw Data. Used for normals, points, etc.
+    isdata: true
+    allocation: uniform
