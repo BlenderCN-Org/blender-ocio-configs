@@ -34,6 +34,9 @@ The current listing of color spaces are as follows:
  * Raw/Data. If the image is intended to be a normal map, bump map, mask, or 
    such, select this color space. It will avoid any transformations that might
    otherwise adjust the data.
+ * AdobeRGB D65. This is a linearized conversion down to the sRGB / 709 space.
+   It is now possible to load AdobeRGB textures and images from common DSLR
+   cameras.
 
 Installation
 ------------
@@ -54,8 +57,6 @@ directory, and replace them with the contents of this repository.
 Targets
 -------
 
-* Transforms into the linearized sRGB / 709 space from AdobeRGB for photographic
-  assets such as textures.
 * A broadcast clamped BT.709.
 * Imports for BT.601 which use the same transfer as BT.709, but a different
   color matrix.

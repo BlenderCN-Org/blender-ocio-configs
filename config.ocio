@@ -78,16 +78,19 @@ colorspaces:
     to_reference: !<FileTransform> {src: rec709fr.spi1d, interpolation: linear}
 
   - !<ColorSpace>
-    name: JPLogLin
+    name: AdobeRGB D65
     family: ""
     equalitygroup: ""
     bitdepth: 32f
     description: |
-      Josh Pines style pivoted log/lin conversion. 445->0.18
+      AdobeRGB D65 Color Space
     isdata: false
     allocation: uniform
-    allocationvars: [-0.125, 1.125]
-    to_reference: !<FileTransform> {src: ploglin.spi1d, interpolation: linear}
+    to_reference: !<GroupTransform>
+      children:
+        - !<FileTransform> {src: adobergb_transfer_to_lin.spi1d, interpolation: linear}
+        - !<FileTransform> {src: adobergb_to_xyz.spimtx, interpolation: unknown}
+        - !<FileTransform> {src: srgb_to_xyz.spimtx, interpolation: unknown, direction: inverse}
 
   - !<ColorSpace>
     name: Raw / Data
