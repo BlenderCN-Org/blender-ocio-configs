@@ -50,7 +50,7 @@ colorspaces:
       Standard RGB Display Space
     isdata: false
     allocation: uniform
-    allocationvars: [-0.125, 1.125]
+    allocationvars: [0, 1]
     to_reference: !<FileTransform> {src: srgb.spi1d, interpolation: linear}
 
   - !<ColorSpace>
@@ -74,7 +74,7 @@ colorspaces:
       Rec. 709 (Full Range) Display Space
     isdata: false
     allocation: uniform
-    allocationvars: [-0.125, 1.125]
+    allocationvars: [0, 1]
     to_reference: !<FileTransform> {src: rec709fr.spi1d, interpolation: linear}
 
   - !<ColorSpace>
@@ -86,6 +86,7 @@ colorspaces:
       AdobeRGB D65 Color Space
     isdata: false
     allocation: uniform
+    allocationvars: [0, 1]
     to_reference: !<GroupTransform>
       children:
         - !<FileTransform> {src: adobergb_transfer_to_lin.spi1d, interpolation: linear}

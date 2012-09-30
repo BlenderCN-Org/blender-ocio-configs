@@ -71,7 +71,7 @@ def fromSRGB(v):
 # crossings
 
 NUM_SAMPLES = 2**12+5
-RANGE = (-0.125, 1.125)
+RANGE = (0.0, 1.0)
 data = []
 for i in xrange(NUM_SAMPLES):
     x = i/(NUM_SAMPLES-1.0)
@@ -131,7 +131,7 @@ def fromRec709(v):
 # crossings
 
 NUM_SAMPLES = 2**12+5
-RANGE = (-0.125, 1.125)
+RANGE = (0.0, 1.0)
 data = []
 for i in xrange(NUM_SAMPLES):
     x = i/(NUM_SAMPLES-1.0)
@@ -171,34 +171,13 @@ for i in xrange(NUM_SAMPLES):
 # Data is AdobeRGBtransfer->Linear
 WriteSPI1D('luts/adobergb_transfer_to_lin.spi1d', RANGE[0], RANGE[1], data)
 
-"""
-data = []
-for i in xrange(NUM_SAMPLES):
-    x = i/(NUM_SAMPLES-1.0)
-    x = Fit(x, 0.0, 1.0, RANGE[0], RANGE[1])
-    data.append(toAdobeRGBtransfer(x))
-
-# Data is Linear->AdobeRGBtransfer
-WriteSPI1D('luts/lin_to_adobergb_transfer.spi1d', RANGE[0], RANGE[1], data)
-"""
-"""
-cs = OCIO.ColorSpace(name='AdobeRGB Transfer')
-cs.setDescription("AdobeRGB transfer curve. Not to be used independently.")
+cs = OCIO.ColorSpace(name='AdobeRGB D65')
+cs.setDescription("AdobeRGB D65 Color Space")
 cs.setBitDepth(OCIO.Constants.BIT_DEPTH_F32)
 cs.setAllocation(OCIO.Constants.ALLOCATION_UNIFORM)
 cs.setAllocationVars([RANGE[0], RANGE[1]])
 
-
-t = OCIO.FileTransform('adobergb_transfer_to_lin.spi1d', interpolation=OCIO.Constants.INTERP_LINEAR)
-cs.setTransform(t, OCIO.Constants.COLORSPACE_DIR_TO_REFERENCE)
-config.addColorSpace(cs)
-"""
-
-cs = OCIO.ColorSpace(name='AdobeRGB D65')
-cs.setDescription("AdobeRGB D65 Color Space")
-cs.setBitDepth(OCIO.Constants.BIT_DEPTH_F32)
 groupTransform = OCIO.GroupTransform()
-#groupTransform.push_back(OCIO.ColorSpaceTransform(dst='Linear sRGB/709',src='AdobeRGB Transfer'))
 groupTransform.push_back(OCIO.FileTransform('adobergb_transfer_to_lin.spi1d', interpolation=OCIO.Constants.INTERP_LINEAR))
 groupTransform.push_back(OCIO.FileTransform('adobergb_to_xyz.spimtx'))
 groupTransform.push_back(OCIO.FileTransform('srgb_to_xyz.spimtx',direction=OCIO.Constants.TRANSFORM_DIR_INVERSE))
