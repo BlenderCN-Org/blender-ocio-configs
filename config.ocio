@@ -32,7 +32,7 @@ active_views: [sRGB, BT.709 (FR), None]
 colorspaces:
   - !<ColorSpace>
     name: Linear sRGB/709
-    family: ""
+    family: sRGB/BT.709
     equalitygroup: ""
     bitdepth: 32f
     description: |
@@ -51,7 +51,7 @@ colorspaces:
     isdata: false
     allocation: uniform
     allocationvars: [0, 1]
-    to_reference: !<FileTransform> {src: srgb.spi1d, interpolation: linear}
+    to_reference: !<FileTransform> {src: srgb.spi1d, interpolation: best}
 
   - !<ColorSpace>
     name: sRGB (HDR)
@@ -63,7 +63,7 @@ colorspaces:
     isdata: false
     allocation: uniform
     allocationvars: [-0.125, 4.875]
-    to_reference: !<FileTransform> {src: srgbf.spi1d, interpolation: linear}
+    to_reference: !<FileTransform> {src: srgbf.spi1d, interpolation: best}
 
   - !<ColorSpace>
     name: BT.709 (FR)
@@ -74,8 +74,8 @@ colorspaces:
       Rec. 709 (Full Range) Display Space
     isdata: false
     allocation: uniform
-    allocationvars: [0, 1]
-    to_reference: !<FileTransform> {src: rec709fr.spi1d, interpolation: linear}
+    allocationvars: [-0.125, 1.125]
+    to_reference: !<FileTransform> {src: rec709fr.spi1d, interpolation: best}
 
   - !<ColorSpace>
     name: AdobeRGB D65
@@ -89,9 +89,10 @@ colorspaces:
     allocationvars: [0, 1]
     to_reference: !<GroupTransform>
       children:
-        - !<FileTransform> {src: adobergb_transfer_to_lin.spi1d, interpolation: linear}
+        - !<FileTransform> {src: adobergb_transfer_to_lin.spi1d, interpolation: best}
         - !<FileTransform> {src: adobergb_to_xyz.spimtx, interpolation: unknown}
-        - !<FileTransform> {src: srgb_to_xyz.spimtx, interpolation: unknown, direction: inverse}
+        - !<FileTransform> {src: srgb_to_xyz.spimtx, interpolation: best, direction: inverse}
+        - !<FileTransform> {src: clamp.spi1d, interpolation: best}
 
   - !<ColorSpace>
     name: Raw / Data
